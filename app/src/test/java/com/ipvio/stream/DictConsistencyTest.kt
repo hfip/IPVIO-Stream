@@ -10,7 +10,7 @@ class DictConsistencyTest {
 
     @Test fun placeholders_eindeutig_und_in_allen_sprachen() {
         val problems = ArrayList<String>()
-        for (block in listOf(DictA, DictB, DictC, DictD, DictE, DictF, DictG, DictH, DictI, DictJ, DictK, DictL, DictM, DictN, DictNl1, DictNl2, DictNl3, DictNl4, DictNl5, DictNl6)) {
+        for (block in listOf(DictA, DictB, DictC, DictD, DictE, DictF, DictG, DictH, DictI, DictJ, DictK, DictL, DictM, DictN, DictNl1, DictNl2, DictNl3, DictNl4, DictNl5, DictNl6, DictAr1)) {
             for (line in block.lineSequence()) {
                 if (line.isBlank() || line.startsWith("#") || !line.contains('¦')) continue
                 val cols = line.split('¦')
@@ -34,6 +34,16 @@ class DictConsistencyTest {
         assertEquals("Playlist toevoegen", I18nCore.translate("Playlist hinzufügen", nl))
         assertEquals("8 afleveringen", I18nCore.translate("8 Folgen", nl))
         assertEquals("Nederlands", I18nCore.NATIVE[nl])
+    }
+
+    @Test fun arabisch_deckt_die_pilotzeilen_ab() {
+        I18nCore.load(DictA, DictB, DictC, DictD, DictE, DictF, DictG, DictH, DictI, DictJ, DictK, DictL, DictM, DictN, DictO)
+        val ar = I18nCore.CODES.indexOf("ar")
+        assertEquals(10, ar)
+        I18nCore.loadColumn(ar, DictAr1)
+        assertEquals("الإعدادات", I18nCore.translate("Einstellungen", ar))
+        assertEquals("متابعة آخر فيلم / مسلسل عند البدء", I18nCore.translate("Letzten Film / letzte Serie beim Start fortsetzen", ar))
+        assertEquals("العربية", I18nCore.NATIVE[ar])
     }
 
     @Test fun zahlen_werden_richtig_eingesetzt() {
